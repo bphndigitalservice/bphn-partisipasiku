@@ -14,7 +14,6 @@ import Link from 'next/link';
 import useCopyToClipboard from '@/hooks/useCopyToClipboard';
 import Disqus from '@/components/Disqus';
 import BackButton from '@/components/base/BackButton';
-import { AppInfo } from '@/configs';
 import {
   FacebookIcon,
   FacebookShareButton,
@@ -59,9 +58,9 @@ const IssueLayout: FunctionComponent<IssueProps> = ({
     <div className='relative flex flex-col '>
       <div className='absolute h-[40vh] bg-top inset-0 bg-gradient-to-b from-pink-200/30 dark:from-violet-500/20 to-transparent z-[-1]'></div>
       <Seo
-        pageTitle={title}
-        description={description}
-        title={title}
+        pageTitle={`${title} - ${topic}`}
+        description={`${description} - ${topic}`}
+        title={`${title} - ${topic}`}
         type='article'
         url={`diskusi/${slug}`}
         image={`${OG_URL}/api/og?title=${encodeURI(title)}&cat=${topic}`}
