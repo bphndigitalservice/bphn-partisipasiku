@@ -25,19 +25,19 @@ const TopicCard: FunctionComponent<TopicCardProps> = (props) => {
       href={`kategori/${props.slug}`}
       className='group relative flex flex-col flex-none snap-always snap-center justify-center items-center gap-1 transition duration-200 ease-in-out cursor-pointer bg-white dark:bg-gray-700/30 rounded-lg h-[200px] shadow-sm dark:shadow-none border-none ring-1 ring-gray-200 dark:ring-gray-800 dark:hover:ring-gray-600 hover:ring-black my-2 mx-2'
     >
-      <div className='top-0 left-0 z-0 absolute md:block overflow-hidden rounded-md w-full h-full brightness-75'>
+      <div className='top-0 left-0 z-0 absolute md:block overflow-hidden rounded-md w-full h-full brightness-50'>
         <AdvanceImage
           src={`${props.cover.publicId}`}
           className='object-cover w-full h-full'
-          loading="lazy"
-          alt="Example"
+          loading='lazy'
+          alt='Example'
           priority={true}
           width={100}
           height={80}
           blurDataURL={props.cover.placeholder ?? DEFAULT_PLACEHOLDER}
         />
       </div>
-      <div className="z-1 relative flex flex-col text-white">
+      <div className='z-1 relative flex flex-col text-white'>
         <span className='text-lg tracking-tight  font-[600] translate-y-[10px] group-hover:translate-y-0 transition-all duration-100 ease-linear'>
           {props.name}
         </span>

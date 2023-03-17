@@ -54,7 +54,7 @@ const Masthead = () => {
   return (
     <section
       className={clsxtw(
-        'relative h-[40vh] inset-0 dark:bg-bottom bg-top bg-no-repeat border-b-slate-500/[0.2] border-b',
+        'relative h-[60vh] inset-0 dark:bg-bottom bg-top bg-no-repeat border-b-slate-500/[0.2] border-b',
         styles.beams
       )}
     >
@@ -62,7 +62,7 @@ const Masthead = () => {
         <h5 className='w-full p-4 text-4xl font-bold tracking-tight text-center text-black font-body dark:text-white lg:text-7xl'>
           Kolaborasi Membangun Hukum.
         </h5>
-        <p className='text-md text-center text-gray-500 dark:text-gray-100/80 lg:text-2xl font-[200] tracking-normal'>
+        <p className='text-md text-center text-gray-500 dark:text-gray-100/80 lg:text-2xl font-[300] tracking-normal'>
           Yuk! Sampaikan pendapatmu terkait isu peraturan perundang-undangan di
           Indonesia 🇮🇩
         </p>

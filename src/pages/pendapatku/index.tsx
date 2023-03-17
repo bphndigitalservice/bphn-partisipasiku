@@ -45,7 +45,7 @@ const Masthead = () => {
       )}
     >
       <div className='flex w-full flex-col items-center justify-center h-full p-4 gap-y-3'>
-        <h5 className='w-full p-4 text-5xl font-bold dark:backdrop-blur-none tracking-tight text-center text-black font-body dark:text-white lg:text-[7em]'>
+        <h5 className='w-full p-4 text-5xl font-bold dark:backdrop-blur-none tracking-tight text-center text-transparent bg-clip-text bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500 font-body lg:text-[7em]'>
           PendapatKu.
         </h5>
         <h6 className='text-md text-center text-black dark:text-gray-100/80 lg:text-2xl font-[400] tracking-normal'>
@@ -99,7 +99,7 @@ const AcceptedIssues = () => {
               Berikut apa yang masyarakat katakan...
             </h6>
           </div>
-          <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             {data?.data.map((e, i) => (
               <PendapatKuCard
                 key={i}
@@ -132,7 +132,7 @@ const AcceptedIssues = () => {
               animate={{ y: 0 }}
               exit={{ y: 1000 }}
               transition={{ type: 'spring', stiffness: 75, delay: 0.04 }}
-              className='fixed z-[9999] w-full bottom-0 left-0 flex flex-col items-center justify-start p-4 h-[80vh] overflow-y-scroll bg-white dark:bg-slate-800 rounded-t-2xl'
+              className='fixed z-[9999] w-full lg:w-[80vw] bottom-0 left-0 lg:left-[10vw] flex flex-col items-center justify-start p-4 h-[80vh] overflow-y-scroll bg-white dark:bg-white/10 backdrop-blur-2xl rounded-t-2xl'
             >
               <div className='flex flex-row w-full justify-end gap-2'>
                 <button onClick={clearSelectedOpinion}>
@@ -140,7 +140,7 @@ const AcceptedIssues = () => {
                 </button>
               </div>
               <Container className='relative justify-start items-start flex flex-col gap-6 md:gap-6 md:divide-gray-300'>
-                <h2 className='text-2xl lg:text-4xl font-extrabold dark:text-white'>
+                <h2 className='text-2xl lg:text-4xl font-[700] dark:text-white'>
                   {selectedOpinion.attributes.judul}
                 </h2>
                 <div className='flex-1 min-w-0'>
@@ -150,7 +150,7 @@ const AcceptedIssues = () => {
                   <p className='text-sm text-gray-500 truncate dark:text-gray-400'></p>
                 </div>
                 <ReactMarkdown
-                  className='prose-lg'
+                  className='prose-sm prose-p:font-[300] prose-p:text-justify'
                   remarkPlugins={[remarkGfm]}
                 >
                   {selectedOpinion.attributes.pendapat}
@@ -223,11 +223,11 @@ const PendapatKuCard: FunctionComponent<{ data: PendapatKu }> = (props) => {
           <p className='text-sm text-gray-500 truncate dark:text-gray-400'></p>
         </div>
       </div>
-      <h5 className='mb-2 text-xl my-5 font-bold tracking-tight text-gray-900 dark:text-white'>
+      <h5 className='mb-2 text-lg my-5 font-[600] tracking-tight text-gray-900 dark:text-white'>
         {props.data.attributes.judul}
       </h5>
       <ReactMarkdown
-        className='prose dark:prose-invert'
+        className='prose-sm prose-p:font-[350] dark:prose-invert'
         remarkPlugins={[remarkGfm]}
       >
         {sliceByWord(props.data.attributes.pendapat, 150)}

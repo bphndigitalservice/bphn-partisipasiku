@@ -174,7 +174,12 @@ const CommendAndShare = ({
       <TwitterShareButton
         title={title}
         url={url}
-        hashtags={[topic]}
+        hashtags={[
+          topic.replaceAll(' ', ''),
+          'Partisipasiku',
+          'BPHN',
+          'Kemenkumham',
+        ]}
       >
         <TwitterIcon
           size={32}

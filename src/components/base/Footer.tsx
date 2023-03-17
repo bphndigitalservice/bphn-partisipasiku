@@ -16,7 +16,7 @@ export default function Footer(): ReactElement {
   return (
     <footer className='font-sans flex py-3 text-sm gap-1 flex-row items-center justify-center border-t dark:border-t-gray-800 bg-[#fafafa] dark:bg-[#111] mt-20'>
       <Container className='flex flex-col items-start justify-between gap-20'>
-        <div className='grid items-start justify-center w-full grid-cols-1 grid-rows-2 gap-5 py-5 lg:gap-10 lg:grid-cols-3 lg:grid-rows-1'>
+        <div className='grid items-start justify-center w-full grid-cols-1 grid-rows-2 gap-5 py-5 lg:gap-10 md:grid-cols-3 md:grid-rows-1'>
           <div className='flex flex-col items-start justify-start w-full gap-2 max-h-max text-gray-600 dark:text-gray-400 font-[300]'>
             <Logo />
             <p>Dikelola oleh Badan Pembinaan Hukum Nasional</p>
@@ -92,7 +92,7 @@ export default function Footer(): ReactElement {
           <p className='flex flex-col text-[0.9em] text-center lg:text-left'>
             Copyright &copy; {new Date().getFullYear()} BPHN.go.id. All rights
             reserved{' '}
-            <span className="text-gray-600">
+            <span className='text-gray-600'>
               Developed and Maintained by Sub Bagian Rumah Tangga
             </span>
           </p>
