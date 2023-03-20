@@ -92,3 +92,27 @@ export type PendapatKuResponse = {
     };
   };
 };
+
+export type Topic = {
+  id: number;
+  attributes: {
+    name: string;
+    slug: string;
+    description: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
+  };
+};
+
+export type TopicResponse = {
+  data: [Topic];
+  meta: {
+    pagination: {
+      page: number;
+      pageCount: number;
+      pageSize: number;
+      total: number;
+    };
+  };
+};

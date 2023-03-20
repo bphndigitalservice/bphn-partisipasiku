@@ -2,16 +2,17 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import dynamic from 'next/dynamic';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { HCAPTCHA_SITEKEY, OG_URL } from '@/configs/env';
 import Seo from '@/components/seo/Seo';
 import Container from '@/components/base/Container';
 import axiosInstance from '@/lib/axiosInstance';
 import Modal from '@/components/base/Modal';
 
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
+const MDEditor = dynamic(
+  () => import('@uiw/react-markdown-editor').then((mod) => mod.default),
+  { ssr: false }
+);
 
 export default function ComposePage() {
   return (

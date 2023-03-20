@@ -1,11 +1,21 @@
 /** @type {import('next').NextConfig} */
 
+const withPlugins = require('next-compose-plugins');
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
-const removeImports = require('next-remove-imports')();
 
-const withPWA = require("next-pwa");
+const runtimeCaching = require("next-pwa/cache");
+const withPWA = require("next-pwa")({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  runtimeCaching,
+  buildExcludes: [/middleware-manifest.json$/],
+});
+
+const removeImports = require('next-remove-imports')();
 
 const nextConfig = {
   reactStrictMode: true,
@@ -17,4 +27,4 @@ const nextConfig = {
 
 
 
-module.exports = removeImports(nextConfig);
+module.exports = withPlugins([withBundleAnalyzer,withPWA, removeImports],nextConfig);
