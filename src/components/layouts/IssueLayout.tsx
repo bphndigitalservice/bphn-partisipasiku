@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 import Container from '@/components/base/Container';

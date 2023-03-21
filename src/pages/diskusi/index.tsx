@@ -1,4 +1,9 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import {
+  GetServerSideProps,
+  GetStaticProps,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType,
+} from 'next';
 import { ChangeEvent, Fragment, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import Seo from '@/components/seo/Seo';
@@ -12,11 +17,10 @@ import IssueGrid from '@/components/IssueGrid';
 import ReactPaginate from 'react-paginate';
 import { AppInfo } from '@/configs';
 import clsxtw from '@/lib/clsxtw';
-import { ColorMode } from '@/types';
 import useSWR from 'swr';
 import { restFetcher } from '@/lib/fetcher';
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const issues = await getIssues({
     pagination: {
       limit: -1,
@@ -29,12 +33,11 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       issues,
     },
-    revalidate: 10,
   };
 };
 export default function IssuePage({
   issues,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [searchValue, setSearchValue] = useState<string>('');
   const [selectedTopic, setSelectedTopic] = useState<string>('');
   const filteredIssue = useMemo((): ContentIssue[] => {
@@ -72,8 +75,8 @@ export default function IssuePage({
   return (
     <Fragment>
       <Seo
-        pageTitle='Topik Isu Peraturan Perundang-undangan'
-        description='Sampaikan pendapat anda'
+        pageTitle='Daftar Isu Peraturan Perundang-undangan'
+        description='Sampaikan pendapat anda terkait Isu hukum Peraturan Perundang-undangan'
         title='Daftar Isu Peraturan Perundang-undangan'
         type='article'
         image={`${AppInfo.url}/api/og?title=${encodeURI(
@@ -108,10 +111,10 @@ export default function IssuePage({
             )}
           >
             <span className='absolute inline-flex cursor-pointer pointer-events-auto'>
-              Filter :
+              Kategori :
             </span>
             <select
-              className='w-full px-12 bg-transparent border-none outline-none appearance-none cursor-pointer font-[300] ring-0 focus-visible:outline-none focus-within:outline-none outline-offset-0 focus:outline-none'
+              className='w-full px-20 bg-transparent border-none outline-none appearance-none cursor-pointer font-[300] ring-0 focus-visible:outline-none focus-within:outline-none outline-offset-0 focus:outline-none'
               value={selectedTopic}
               onChange={(evt) => setSelectedTopic(evt.target.value)}
             >
@@ -153,7 +156,7 @@ export default function IssuePage({
           </div>
         </div>
         <IssueGrid
-          className="lg:grid-cols-4"
+          className='lg:grid-cols-4'
           issues={currentItems}
         />
         <ReactPaginate

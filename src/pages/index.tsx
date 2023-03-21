@@ -10,7 +10,6 @@ import { getIssues, getTopics } from '@/lib/content';
 import { ContentIssue, ContentTopic } from '@/types/model';
 import IssueGrid from '@/components/IssueGrid';
 import { AppInfo } from '@/configs';
-import * as url from 'url';
 
 export const getStaticProps: GetStaticProps = async () => {
   const issues = await getIssues({
@@ -103,13 +102,13 @@ const HighlightedTopics = ({ topics }: { topics: ContentTopic[] }) => {
 const HighlightedIssues = ({ issues }: { issues: ContentIssue[] }) => {
   return (
     <Section
-      sectionTitle='Topik Terbaru.'
+      sectionTitle='Isu Terbaru.'
       className='py-2 overflow-hidden'
       actionLink='/diskusi'
       actionLabel='Lihat Semua'
     >
       <IssueGrid
-        className="lg:grid-cols-4"
+        className='lg:grid-cols-4'
         issues={issues}
       />
     </Section>
