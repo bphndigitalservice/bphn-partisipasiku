@@ -100,7 +100,7 @@ export default function IssuePage({
             onChange={debounceQueryChange}
             placeholder='Search'
             leftIcon={<SearchIcon />}
-            className="flex-1"
+            className='flex-1'
           />
           <div
             className={clsxtw(
@@ -116,9 +116,9 @@ export default function IssuePage({
               onChange={(evt) => setSelectedTopic(evt.target.value)}
             >
               <option
-                key="defaultTopic"
+                key='defaultTopic'
                 className='flex flex-row'
-                value=""
+                value=''
               >
                 Semua
               </option>
@@ -152,7 +152,10 @@ export default function IssuePage({
             </span>
           </div>
         </div>
-        <IssueGrid issues={currentItems} />
+        <IssueGrid
+          className="lg:grid-cols-4"
+          issues={currentItems}
+        />
         <ReactPaginate
           className='inline-flex w-full gap-3 my-5 items-center justify-center'
           pageLinkClassName='block px-3 py-1 rounded-md bg-gray-100 dark:bg-gray-900 text-black dark:text-white hover:bg-gray-300 transition-color duration-100 ease-in-out'

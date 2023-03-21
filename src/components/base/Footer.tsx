@@ -9,8 +9,6 @@ import Container from './Container';
 import Logo from './Logo';
 import ColorModeSwitcher from '@/components/ColorModeSwitcher';
 import Link, { LinkProps } from 'next/link';
-import { ClassValue } from 'clsx';
-import clsxtw from '@/lib/clsxtw';
 
 export default function Footer(): ReactElement {
   return (

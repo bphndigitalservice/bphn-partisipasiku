@@ -21,7 +21,8 @@ const Input: FunctionComponent<InputProps> = ({
     <div
       className={clsxtw(
         'p-1.5 flex-1 gap-2 placeholder-slate-500 dark:placeholder-slate-100 border border-gray-200 dark:border-gray-600 rounded-md flex flex-row group transition-colors duration-100 ease-in-out text-gray-400',
-        { 'border-black dark:border-slate-100': isFocus }
+        { 'border-black dark:border-slate-100': isFocus },
+        className
       )}
     >
       {leftIcon && leftIcon}
@@ -30,8 +31,7 @@ const Input: FunctionComponent<InputProps> = ({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         className={clsxtw(
-          'w-full ring-0 focus-visible:outline-none bg-transparent focus-within:outline-none outline-offset-0 text-[0.9em] text-gray-700 dark:focus:text-white rounded-none focus:outline-none focus:border-none',
-          className
+          'w-full ring-0 focus-visible:outline-none bg-transparent focus-within:outline-none outline-offset-0 text-[0.9em] text-gray-700 dark:focus:text-white rounded-none focus:outline-none focus:border-none'
         )}
       />
     </div>

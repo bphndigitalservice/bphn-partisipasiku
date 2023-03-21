@@ -126,7 +126,7 @@ const IssueLayout: FunctionComponent<IssueProps> = ({
 
 export default IssueLayout;
 
-const CommendAndShare = ({
+export const CommendAndShare = ({
   url,
   title,
   topic,

@@ -10,6 +10,7 @@ import { SearchIcon } from '@/components/icons';
 import debounce from 'lodash.debounce';
 import IssueGrid from '@/components/IssueGrid';
 import Markdown from '@/components/markdown/Markdown';
+import { CommendAndShare } from '@/components/layouts/IssueLayout';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const topics = await getTopics({ sort: 'createdAt:asc' });
@@ -71,30 +72,39 @@ export default function IssueByTopicPage({
         title={topic.name}
         type='article'
       />
-      <Container className='p-6 md:p-4'>
-        <div className='flex flex-col mt-10 gap-2'>
+      <Container className='mt-10 flex flex-col lg:flex-row gap-6'>
+        <div className='flex flex-col w-full lg:w-[50vw] gap-2 lg:px-6 lg:border-r border-r-gray-200 dark:border-slate-700'>
           <motion.h5
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className='text-2xl lg:text-4xl font-bold tracking-normal'
+            className='text-2xl lg:text-4xl font-[600] tracking-normal'
           >
             {topic.name}
           </motion.h5>
           <Markdown
             mdx={topic.background}
-            className='pb-10 border-b prose-md font-body border-b-gray-100 dark:border-b-gray-800'
+            className='pb-10 prose-md font-body'
           />
         </div>
 
-        <div className='flex flex-col w-full my-8'>
+        <div className='flex flex-col w-full gap-2'>
+          <motion.h5
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            className='text-xl font-[600] tracking-normal'
+          >
+            Filter
+          </motion.h5>
           <Input
             onChange={debounceQueryChange}
             placeholder='Search'
+            className="flex-none"
             leftIcon={<SearchIcon />}
           />
+          <IssueGrid issues={filteredIssue} />
         </div>
-        <IssueGrid issues={filteredIssue} />
       </Container>
     </Fragment>
   );

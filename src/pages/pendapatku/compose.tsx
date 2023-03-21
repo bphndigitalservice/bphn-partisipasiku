@@ -2,6 +2,8 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import dynamic from 'next/dynamic';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
+import '@uiw/react-markdown-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
 import React, { Fragment, useRef, useState } from 'react';
 import { HCAPTCHA_SITEKEY, OG_URL } from '@/configs/env';
 import Seo from '@/components/seo/Seo';

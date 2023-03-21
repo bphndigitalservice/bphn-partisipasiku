@@ -15,7 +15,7 @@ import * as url from 'url';
 export const getStaticProps: GetStaticProps = async () => {
   const issues = await getIssues({
     pagination: { limit: 8 },
-    sort: ['legacyDate:desc', 'createdAt:desc'],
+    sort: ['legacyDate:asc', 'createdAt:desc'],
   });
   const topics = await getTopics({
     pagination: { limit: 6 },
@@ -108,7 +108,10 @@ const HighlightedIssues = ({ issues }: { issues: ContentIssue[] }) => {
       actionLink='/diskusi'
       actionLabel='Lihat Semua'
     >
-      <IssueGrid issues={issues} />
+      <IssueGrid
+        className="lg:grid-cols-4"
+        issues={issues}
+      />
     </Section>
   );
 };
