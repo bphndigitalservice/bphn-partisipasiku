@@ -11,14 +11,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     loc: `${AppInfo.url}/diskusi/${e.slug}`,
     lastmod: new Date().toISOString(),
     priority: 0.7,
-    changefreq: 'weekly',
+    changefreq: 'daily',
   }));
 
   const topicFields: ISitemapField[] = topics.map((e) => ({
     loc: `${AppInfo.url}/kategori/${e.slug}`,
     lastmod: new Date().toISOString(),
     priority: 0.68,
-    changefreq: 'weekly',
+    changefreq: 'daily',
   }));
 
   return getServerSideSitemap(ctx, fields.concat(topicFields));
