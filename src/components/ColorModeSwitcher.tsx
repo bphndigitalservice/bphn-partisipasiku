@@ -23,7 +23,7 @@ const ColorModeSwitcher: FunctionComponent<ColorModeSelectionProps> = (
   return (
     <div
       className={clsxtw(
-        'relative flex-row items-center justify-between px-2 py-2 text-sm border border-gray-100 rounded md:flex group dark:border-gray-800',
+        'relative flex-row items-center justify-between px-2 py-2 text-sm border border-gray-100 rounded lg:flex group dark:border-gray-800',
         className
       )}
     >

@@ -13,6 +13,8 @@ import Indicator from '@/components/indicator';
 import { RegulationHistory, Response } from '@/types/model';
 import moment from 'moment/moment';
 import 'moment/locale/id';
+import Seo from '@/components/seo/Seo';
+import { OG_URL } from '@/configs/env';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -46,20 +48,33 @@ export default function DraftPage(
   ];
   const discussionUrl = useDiscussionUrl();
   return (
-    <div>
+    <div className="relative flex flex-col">
+      <div className='absolute h-[40vh] bg-top inset-0 bg-gradient-to-b from-pink-200/30 dark:from-violet-500/20 to-transparent z-[-1]'></div>
+      <Seo
+        pageTitle={`${props.draft.data.regulation.title}`}
+        description={`${props.draft.data.regulation.title}`}
+        title={`${props.draft.data.regulation.title} - ${props.draft.data.program.name}`}
+        type='article'
+        url={`draft/${props.draft.data.id}/${slugify(
+          props.draft.data.regulation.title
+        )}`}
+        image={`${OG_URL}/api/og?title=${encodeURI(
+          props.draft.data.regulation.title
+        )}&cat=${encodeURI('Program Legislasi')}`}
+      />
       <Container>
         <Breadcrumb links={links} />
       </Container>
-      <section className='bg-white dark:bg-black p-2 lg:p-5'>
+      <section className='p-2 lg:p-5'>
         <Container className='flex flex-col gap-2'>
           <Back />
-          <p className='max-w-max text-slate-800 dark:text-gray-200 font-[500] text-sm'>
+          <p className='max-w-max text-slate-800 dark:text-gray-200 font-[500] text-sm py-1 border-b border-b-slate-800 dark:border-b-gray-200'>
             {props.draft.data.program.name}
           </p>
           <h3 className='text-xl lg:text-3xl font-[600] dark:text-white mb-10'>
             {props.draft.data.regulation.title}
           </h3>
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 mb-[20vh]'>
             <Detail
               department={props.draft.data.department}
               regulation={props.draft.data.regulation}
@@ -67,8 +82,10 @@ export default function DraftPage(
               stage={props.draft.data.stage}
               performaceColor={props.draft.data.performance_appearance}
             />
+            <Artifacts />
             <History histories={props.histories.data} />
           </div>
+
           <CommendAndShare
             url={discussionUrl}
             title={props.draft.data.regulation.label}
@@ -102,7 +119,7 @@ function Detail({
   performaceColor: string;
 }) {
   return (
-    <div className='border border-dashed border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
+    <div className='border border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
       <h5 className='text-xl font-bold dark:text-white'>Rincian</h5>
       <div className='flex flex-col gap-1'>
         <span className='font-[600] text-xs text-gray-500 uppercase'>
@@ -155,9 +172,14 @@ function Detail({
 
 function History({ histories }: { histories: RegulationHistory[] }) {
   return (
-    <div className='border border-dashed border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
+    <div className='border border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
       <h5 className='text-xl font-bold dark:text-white'>Rekam Jejak</h5>
       <ol className='relative border-l border-gray-200 dark:border-gray-700'>
+        {histories.length <= 0 && (
+          <p className="text-black dark:text-gray-500">
+            Tidak ada record sebelumnya.
+          </p>
+        )}
         {histories.map((e, i) => (
           <li
             className='mb-10 ml-6'
@@ -194,6 +216,38 @@ function History({ histories }: { histories: RegulationHistory[] }) {
           </li>
         ))}
       </ol>
+    </div>
+  );
+}
+
+function Artifacts() {
+  return (
+    <div className='border border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
+      <h5 className='text-xl font-bold dark:text-white'>Dokumen</h5>
+      <div className='flex flex-col gap-1'>
+        <span className='font-[600] text-xs text-gray-500 uppercase'>
+          Naskah Akademik
+        </span>
+        <span className='font-[400] text-sm'>
+          Menunggu persetujuan publikasi
+        </span>
+      </div>
+      <div className='flex flex-col gap-1'>
+        <span className='font-[600] text-xs text-gray-500 uppercase'>
+          Draft PUU
+        </span>
+        <span className='font-[400] text-sm'>
+          Menunggu persetujuan publikasi
+        </span>
+      </div>
+      <div className='flex flex-col gap-1'>
+        <span className='font-[600] text-xs text-gray-500 uppercase'>
+          Dokumen Lainnya
+        </span>
+        <span className='font-[400] text-sm'>
+          Menunggu persetujuan publikasi
+        </span>
+      </div>
     </div>
   );
 }

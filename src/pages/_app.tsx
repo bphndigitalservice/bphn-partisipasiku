@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useGlobalState } from '@/store';
 import NextNProgress from 'nextjs-progressbar';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import { GoogleAnalytics } from 'nextjs-google-analytics';
 
 export default function App({ Component, pageProps }: AppProps): ReactElement {
   const router = useRouter();
@@ -26,6 +27,10 @@ export default function App({ Component, pageProps }: AppProps): ReactElement {
       <RootLayout>
         <NextNProgress options={{ easing: 'ease', speed: 500 }} />
         <ErrorBoundary>
+          <GoogleAnalytics
+            trackPageViews
+            strategy="lazyOnload"
+          />
           <Component {...pageProps} />
         </ErrorBoundary>
       </RootLayout>

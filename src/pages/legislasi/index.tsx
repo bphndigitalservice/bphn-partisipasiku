@@ -4,11 +4,11 @@ import Seo from '@/components/seo/Seo';
 import clsxtw from '@/lib/clsxtw';
 import { Response, Program } from '@/types/model';
 import DraftCard from '@/components/card/DraftCard';
-import { programs } from '@/lib/legislasirepo';
+import { fetchPrograms } from '@/lib/legislasirepo';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 export async function getServerSideProps() {
-  const result = await programs();
+  const result = await fetchPrograms();
   const data = result;
 
   return {
@@ -59,7 +59,7 @@ const Drafts: FunctionComponent<{ program: Response<Program[]> }> = (props) => {
   const [page, setPage] = useState<number>(1);
 
   return (
-    <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
       {props.program.data.map((e, i) => (
         <DraftCard
           key={e.id}

@@ -7,7 +7,7 @@ type MenuToggleProps = MotionProps & ComponentPropsWithoutRef<'button'>;
 const MenuToggle: FunctionComponent<MenuToggleProps> = (props) => {
   return (
     <motion.button
-      className='block text-black appearance-none md:hidden dark:text-white'
+      className='block text-black appearance-none lg:hidden dark:text-white'
       aria-label='menu button'
       {...props}
     >

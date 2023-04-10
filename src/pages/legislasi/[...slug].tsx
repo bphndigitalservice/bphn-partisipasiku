@@ -1,5 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { Task, Program, ProgramType, Response } from '@/types/model';
+import { Task, Response } from '@/types/model';
 import React, { ComponentPropsWithoutRef, FunctionComponent } from 'react';
 import Container from '@/components/base/Container';
 import { programDetail, tasks, TasksQueryParams } from '@/lib/legislasirepo';
@@ -13,6 +13,13 @@ import slugify from '@sindresorhus/slugify';
 import Back from '@/components/back';
 import Breadcrumb from '@/components/breadcrumb';
 import Seo from '@/components/seo/Seo';
+import {
+  IP_INTRO,
+  PROGSUN_PERPRES,
+  PROGSUN_PP,
+  PROLEGNAS_LONGLIST,
+  PROLEGNAS_PRIORITAS,
+} from '@/configs/intro';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -35,6 +42,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
+
+function getIntro(typeCode: string): string {
+  switch (typeCode) {
+    case 'IP':
+      return IP_INTRO;
+    case 'RUU':
+      return PROLEGNAS_PRIORITAS;
+    case 'RUU-L':
+      return PROLEGNAS_LONGLIST;
+    case 'RPP':
+      return PROGSUN_PP;
+    case 'RPerpres':
+      return PROGSUN_PERPRES;
+    default:
+      return 'Undefined';
+  }
+}
 
 export default function DraftPage(
   props: InferGetServerSidePropsType<GetServerSideProps>
@@ -80,7 +104,7 @@ const LegislationTable: FunctionComponent<LegislationTableProps> = ({
   data,
 }) => {
   return (
-    <div className='relative overflow-x-auto border border-gray-200/50 dark:border-slate-700 sm:rounded-lg'>
+    <div className='relative overflow-x-auto border border-gray-200/50 dark:border-slate-700 rounded-lg'>
       <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed'>
         <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
           <tr>
@@ -104,7 +128,7 @@ const LegislationTable: FunctionComponent<LegislationTableProps> = ({
             </th>
             <th
               scope='col'
-              className='px-6 py-3 tracking-normal lg:w-1/6'
+              className='px-6 py-3 tracking-normal hidden lg:table-cell lg:w-1/6'
             >
               Progres
             </th>
@@ -129,9 +153,14 @@ const LegislationTable: FunctionComponent<LegislationTableProps> = ({
                   >
                     {e.regulation.title}
                   </Link>
-                  <span className='max-w-max text-slate-700 text-[0.9em] font-medium mr-2 dark:text-gray-300'>
-                    {e.program.name}
-                  </span>
+                  <p className='flex lg:hidden flex-col gap-2'>
+                    <span className='text-xs text-slate-800 dark:text-blue-500 font-[600]'>
+                      {e.stage.name}
+                    </span>
+                    <span className='text-xs '>
+                      diperbarui {moment(e.updated_at).fromNow()}
+                    </span>
+                  </p>
                 </div>
               </td>
               <td className='px-6 py-4 hidden lg:table-cell'>
@@ -142,9 +171,9 @@ const LegislationTable: FunctionComponent<LegislationTableProps> = ({
               <td className='px-6 py-4 hidden lg:table-cell'>
                 <p className='text-sm font-[400]'>{e.department.name}</p>
               </td>
-              <td className='px-6 py-4'>
+              <td className='px-6 py-4 hidden lg:table-cell'>
                 <div className='w-full flex flex-col gap-2'>
-                  <p className='text-xs text-slate-800 font-[600]'>
+                  <p className='text-xs text-slate-800 dark:text-white font-[600]'>
                     {e.stage.name}
                   </p>
                   <p className='text-xs '>

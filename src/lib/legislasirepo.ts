@@ -27,9 +27,7 @@ export interface TasksQueryParams {
   year?: number | string;
   page?: number | string;
 }
-export const tasks = async (
-  params?: TasksQueryParams
-): Promise<AxiosResponse> => {
+export const tasks = async (params?: TasksQueryParams) => {
   const urlSearchParams = new URLSearchParams();
   if (params?.year)
     urlSearchParams.set('filter[programs.year]', `${params.year}`);
@@ -48,7 +46,7 @@ export const tasks = async (
   });
 };
 
-export const programs = async (type?: number) => {
+export const fetchPrograms = async (type?: number) => {
   const searchParams = new URLSearchParams();
   if (type) searchParams.set(`filter[type]`, `${type}`);
   searchParams.append('sort', '-year');

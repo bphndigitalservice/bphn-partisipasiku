@@ -38,7 +38,7 @@ export default function TopicPage({
           transition={{ delay: 0.1 }}
           className='text-2xl font-body my-10 font-bold max-w-max'
         >
-          Kategori
+          Topik
         </motion.h5>
         <div className='grid grid-cols-2 lg:grid-cols-4'>
           {topics.map((e: ContentTopic) => (

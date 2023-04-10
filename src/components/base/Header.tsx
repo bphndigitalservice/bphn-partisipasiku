@@ -42,7 +42,7 @@ export default function Header({
       >
         <Container className='flex flex-row items-center justify-between'>
           <Logo />
-          <Navigation className='flex-row items-center justify-between hidden md:flex md:gap-2'>
+          <Navigation className='flex-row items-center justify-between hidden lg:flex md:gap-2'>
             <ul className='inline-flex gap-4'>
               <li>
                 <NavLink href='/'>Beranda</NavLink>
@@ -104,7 +104,7 @@ export default function Header({
                     <MNavLink href='/'>Beranda</MNavLink>
                     <MNavLink href='/legislasi'>Program Legislasi</MNavLink>
                     <MNavLink href='/diskusi'>Isu Hukum</MNavLink>
-                    <MNavLink href='/kategori'>Kategori Isu</MNavLink>
+                    <MNavLink href='/kategori'>Topik</MNavLink>
                     <MNavLink href='/pendapatku'>PendapatKu</MNavLink>
                     <MNavLink href='/tentang-kami'>Tentang Kami</MNavLink>
                   </ul>

@@ -6,6 +6,18 @@ module.exports = {
   generateRobotsTxt: true,
   sitemapSize: 5000,
   exclude: ['/server-sitemap-index.xml'],
+  transform: async (config,path)=>({
+    loc: path, // => this will be exported as http(s)://<config.siteUrl>/<path>
+      changefreq: config.changefreq,
+      priority: config.priority,
+      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
+      news: {
+      title: '--',
+        publicationName: 'BPHN',
+        publicationLanguage: 'id',
+        date: new Date(),
+    },
+  }),
   robotsTxtOptions: {
     policies: [
       {
