@@ -73,7 +73,7 @@ const Masthead = () => {
 const HighlightedTopics = ({ topics }: { topics: ContentTopic[] }) => {
   return (
     <Section
-      sectionTitle='Pilih Kategori.'
+      sectionTitle='Pilih Topik.'
       className='py-2 overflow-hidden'
       actionLink='/kategori'
       actionLabel='Lihat Semua'

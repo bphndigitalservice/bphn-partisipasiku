@@ -2,6 +2,7 @@ import { ContentIssue } from '@/types/model';
 import IssueCard from '@/components/card/IssueCard';
 import { ComponentPropsWithoutRef } from 'react';
 import clsxtw from '@/lib/clsxtw';
+import { motion } from 'framer-motion';
 
 export interface IssueGridProps extends ComponentPropsWithoutRef<'div'> {
   issues: ContentIssue[];

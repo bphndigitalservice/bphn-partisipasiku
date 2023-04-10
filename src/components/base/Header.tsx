@@ -48,10 +48,13 @@ export default function Header({
                 <NavLink href='/'>Beranda</NavLink>
               </li>
               <li>
+                <NavLink href='/legislasi'>Program Legislasi</NavLink>
+              </li>
+              <li>
                 <NavLink href='/diskusi'>Isu Hukum</NavLink>
               </li>
               <li>
-                <NavLink href='/kategori'>Kategori Isu</NavLink>
+                <NavLink href='/kategori'>Topik</NavLink>
               </li>
               <li>
                 <NavLink href='/pendapatku'>PendapatKu</NavLink>
@@ -99,6 +102,7 @@ export default function Header({
                   </div>
                   <ul className='flex flex-col gap-1 py-2'>
                     <MNavLink href='/'>Beranda</MNavLink>
+                    <MNavLink href='/legislasi'>Program Legislasi</MNavLink>
                     <MNavLink href='/diskusi'>Isu Hukum</MNavLink>
                     <MNavLink href='/kategori'>Kategori Isu</MNavLink>
                     <MNavLink href='/pendapatku'>PendapatKu</MNavLink>

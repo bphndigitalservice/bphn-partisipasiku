@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  FunctionComponent,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { Fragment, FunctionComponent, useMemo, useState } from 'react';
 import Seo from '@/components/seo/Seo';
 import { AppInfo } from '@/configs';
 import Container from '@/components/base/Container';
