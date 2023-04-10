@@ -12,7 +12,7 @@ import { Department, Program, Regulation, Stage } from '@/types/model';
 import Indicator from '@/components/indicator';
 import { RegulationHistory, Response } from '@/types/model';
 import moment from 'moment/moment';
-import useSWR from 'swr';
+import 'moment/locale/id';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -130,6 +130,15 @@ function Detail({
           label={stage.name}
           color={performaceColor}
         />
+      </div>
+      <div className='flex flex-col gap-1'>
+        <span className='font-[600] text-xs text-gray-500 uppercase'>
+          Dasar Penyusunan
+        </span>
+        <div
+          className='prose prose-sm dark:text-white'
+          dangerouslySetInnerHTML={{ __html: regulation.note }}
+        ></div>
       </div>
       <div className='flex flex-col gap-1'>
         <span className='font-[600] text-xs text-gray-500 uppercase'>

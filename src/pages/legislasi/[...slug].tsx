@@ -6,6 +6,7 @@ import { programDetail, tasks, TasksQueryParams } from '@/lib/legislasirepo';
 import clsxtw from '@/lib/clsxtw';
 import Link from 'next/link';
 import moment from 'moment/moment';
+import 'moment/locale/id';
 import SearchBar from '@/components/search-bar';
 import Pagination from '@/components/pagination';
 import slugify from '@sindresorhus/slugify';

@@ -47,8 +47,8 @@ const Masthead = () => {
           Program Legislasi
         </h5>
         <h6 className='text-md text-center text-black dark:text-gray-100/80 lg:text-2xl font-[400] tracking-normal'>
-          Jangan ragu sampaikan pendapat kalian terkait Program Legislasi di
-          bawah ini.
+          Pantau dan sampaikan pendapat anda terkait progres pembentukan
+          peraturan perundang-undangan di Indonesia.
         </h6>
       </div>
     </section>
@@ -59,7 +59,7 @@ const Drafts: FunctionComponent<{ program: Response<Program[]> }> = (props) => {
   const [page, setPage] = useState<number>(1);
 
   return (
-    <div className='grid grid-cols-2 lg:grid-cols-3 gap-2'>
+    <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
       {props.program.data.map((e, i) => (
         <DraftCard
           key={e.id}
