@@ -1,5 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import React, { Suspense } from 'react';
+import React, { FunctionComponent, Suspense, useState } from 'react';
 import Container from '@/components/base/Container';
 import axiosInstance, { taskDetail } from '@/lib/legislasirepo';
 import Breadcrumb from '@/components/breadcrumb';
@@ -8,13 +8,24 @@ import Disqus from '@/components/Disqus';
 import { CommendAndShare } from '@/components/layouts/IssueLayout';
 import { useDiscussionUrl } from '@/hooks/useDiscussionUrl';
 import slugify from '@sindresorhus/slugify';
-import { Department, Program, Regulation, Stage } from '@/types/model';
+import {
+  Artifact,
+  Department,
+  Program,
+  Regulation,
+  Stage,
+  RegulationHistory,
+  Response,
+} from '@/types/model';
 import Indicator from '@/components/indicator';
-import { RegulationHistory, Response } from '@/types/model';
 import moment from 'moment/moment';
 import 'moment/locale/id';
 import Seo from '@/components/seo/Seo';
 import { OG_URL } from '@/configs/env';
+import useSWR from 'swr';
+import { DateTime } from 'asn1js';
+import { useDownloadFile } from '@/hooks/useDownloadFile';
+import FileSaver from 'file-saver';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
@@ -48,7 +59,7 @@ export default function DraftPage(
   ];
   const discussionUrl = useDiscussionUrl();
   return (
-    <div className="relative flex flex-col">
+    <div className='relative flex flex-col'>
       <div className='absolute h-[40vh] bg-top inset-0 bg-gradient-to-b from-pink-200/30 dark:from-violet-500/20 to-transparent z-[-1]'></div>
       <Seo
         pageTitle={`${props.draft.data.regulation.title}`}
@@ -82,7 +93,7 @@ export default function DraftPage(
               stage={props.draft.data.stage}
               performaceColor={props.draft.data.performance_appearance}
             />
-            <Artifacts />
+            <Artifacts taskId={props.draft.data.id} />
             <History histories={props.histories.data} />
           </div>
 
@@ -176,7 +187,7 @@ function History({ histories }: { histories: RegulationHistory[] }) {
       <h5 className='text-xl font-bold dark:text-white'>Rekam Jejak</h5>
       <ol className='relative border-l border-gray-200 dark:border-gray-700'>
         {histories.length <= 0 && (
-          <p className="text-black dark:text-gray-500">
+          <p className='text-black dark:text-gray-500'>
             Tidak ada record sebelumnya.
           </p>
         )}
@@ -220,34 +231,74 @@ function History({ histories }: { histories: RegulationHistory[] }) {
   );
 }
 
-function Artifacts() {
+const artifactFetcher = async (url: string) => {
+  return await axiosInstance
+    .get(url)
+    .then((res) => res.data)
+    .catch((error) => {
+      if (error.response.status !== 409) throw error;
+    });
+};
+
+function Artifacts({ taskId }: { taskId: number | string }) {
+  const { data, isLoading, error } = useSWR<{ data: Artifact[] }>(
+    `tasks/${taskId}/artifacts`,
+    artifactFetcher
+  );
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className='border border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
       <h5 className='text-xl font-bold dark:text-white'>Dokumen</h5>
-      <div className='flex flex-col gap-1'>
-        <span className='font-[600] text-xs text-gray-500 uppercase'>
-          Naskah Akademik
-        </span>
-        <span className='font-[400] text-sm'>
-          Menunggu persetujuan publikasi
-        </span>
-      </div>
-      <div className='flex flex-col gap-1'>
-        <span className='font-[600] text-xs text-gray-500 uppercase'>
-          Draft PUU
-        </span>
-        <span className='font-[400] text-sm'>
-          Menunggu persetujuan publikasi
-        </span>
-      </div>
-      <div className='flex flex-col gap-1'>
-        <span className='font-[600] text-xs text-gray-500 uppercase'>
-          Dokumen Lainnya
-        </span>
-        <span className='font-[400] text-sm'>
-          Menunggu persetujuan publikasi
-        </span>
+      <div className="grid grid-cols-3 gap-2">
+        {data?.data.map((e, i) => (
+          <DownloadArtifactButton
+            artifact={e}
+            key={e.id}
+          />
+        ))}
       </div>
     </div>
   );
 }
+
+interface DownloadArtifactButtonProps {
+  artifact: Artifact;
+}
+
+const DownloadArtifactButton: FunctionComponent<DownloadArtifactButtonProps> = (
+  props
+) => {
+  const downloadFile = () => {
+    return axiosInstance
+      .get(`artifacts/${artifact.id}/download`, {
+        responseType: 'blob',
+      })
+      .then((res) => {
+        FileSaver.saveAs(res.data);
+      });
+  };
+
+  const { artifact } = props;
+
+  return (
+    <div
+      className="bg-white dark:bg-black rounded-md border border-gray-200 dark:border-gray-800 p-2 flex flex-col gap-2"
+    >
+      <p className="font-[500] text-blue-500">{artifact.artifact_type}</p>
+      <p className="font-[500] text-xs">
+        diperbarui {moment(artifact.uploaded_at).fromNow()}
+      </p>
+      <button
+        type='button'
+        onClick={downloadFile}
+        className='px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+      >
+        Unduh
+      </button>
+    </div>
+  );
+};

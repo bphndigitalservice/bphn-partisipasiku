@@ -209,3 +209,11 @@ export interface Stage {
   id: number;
   name: string;
 }
+
+export interface Artifact {
+  id: number;
+  artifact_name: string;
+  artifact_type: string;
+  uploaded_at: string;
+  period_description: string;
+}

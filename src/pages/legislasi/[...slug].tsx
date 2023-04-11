@@ -142,9 +142,6 @@ const LegislationTable: FunctionComponent<LegislationTableProps> = ({
             >
               <td className='px-6 py-4'>
                 <div className='flex flex-col gap-2'>
-                  <span className='bg-gray-600 max-w-max text-gray-100 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300'>
-                    {e.type}
-                  </span>
                   <Link
                     href={`/draft/${e.id}/${slugify(e.regulation.title)}`}
                     className={clsxtw(
