@@ -37,7 +37,7 @@ interface IParams extends ParsedUrlQuery {
   slug: string;
 }
 export const getStaticPaths: GetStaticPaths<IParams> = async () => {
-  const response = await fetchTasks({ limit: -1 });
+  const response = await fetchTasks({ limit: 100 });
 
   const paths = response.data.data.map((e) => {
     const title = truncateSlug(e.regulation.title);
