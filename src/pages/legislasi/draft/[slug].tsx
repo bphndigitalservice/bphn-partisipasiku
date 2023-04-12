@@ -263,7 +263,7 @@ function Detail({
 
 function History({ histories }: { histories: RegulationHistory[] }) {
   return (
-    <div className='border border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
+    <div className='border hover:border-gray-700 dark:border-gray-200 border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
       <h5 className='text-xl font-bold dark:text-white'>Rekam Jejak</h5>
       <ol className='relative border-l border-gray-200 dark:border-gray-700'>
         {histories.length <= 0 && (
@@ -321,7 +321,7 @@ function Artifacts({ taskId }: { taskId: number | string }) {
     return (
       <div
         role='status'
-        className='max-w-sm animate-pulse'
+        className='max-w-sm animate-pulse border p-5 rounded-md border-gray-200 dark:border-gray-500'
       >
         <div className='h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4'></div>
         <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5'></div>
@@ -335,7 +335,7 @@ function Artifacts({ taskId }: { taskId: number | string }) {
   }
 
   return (
-    <div className='border border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
+    <div className='border border-gray-300 hover:border-gray-700 dark:border-gray-200 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
       <h5 className='text-xl font-bold dark:text-white'>Dokumen</h5>
       <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
         {data?.data.map((e, i) => (

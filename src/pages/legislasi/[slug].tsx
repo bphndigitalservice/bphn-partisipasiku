@@ -27,6 +27,7 @@ import ReactPaginate from 'react-paginate';
 import { useRouter } from 'next/router';
 import DraftProgress from '@/components/DraftProgress';
 import { truncateSlug } from '@/lib/string';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 interface IParams extends ParsedUrlQuery {
   slug: string;
@@ -162,6 +163,7 @@ const LegislationTable: FunctionComponent<LegislationTableProps> = ({
 }) => {
   const drafts = data.data;
   const { query } = useRouter();
+
   const label = query.label ?? '';
 
   const filteredIssue = useMemo((): Task[] => {
@@ -234,7 +236,7 @@ const LegislationTable: FunctionComponent<LegislationTableProps> = ({
                       </Link>
                       <DraftProgress
                         id={e.id}
-                        className="flex lg:hidden flex-col gap-2"
+                        className='flex lg:hidden flex-col gap-2'
                       />
                     </div>
                   </td>
@@ -260,7 +262,7 @@ const LegislationTable: FunctionComponent<LegislationTableProps> = ({
         pageLinkClassName='block px-3 py-1 rounded-md bg-gray-100 dark:bg-gray-900 text-black dark:text-white hover:bg-gray-300 transition-color duration-100 ease-in-out'
         activeLinkClassName='bg-black hover:bg-black/30 text-white'
         onPageChange={pageChangeHandler}
-        pageRangeDisplayed={5}
+        pageRangeDisplayed={10}
         breakLabel='...'
         pageCount={pageCount}
       />

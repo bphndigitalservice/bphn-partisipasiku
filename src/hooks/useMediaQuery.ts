@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useIsomorphicLayoutEffect } from '@/hooks/index';
 
 function useMediaQuery(query: string): boolean {
   const getMatches = (query: string): boolean => {
@@ -15,7 +16,7 @@ function useMediaQuery(query: string): boolean {
     setMatches(getMatches(query));
   }
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const matchMedia = window.matchMedia(query);
 
     // Triggered at the first client-side load and if query changes

@@ -133,7 +133,7 @@ const AcceptedIssues = () => {
                   <CloseIcon />
                 </button>
               </div>
-              <Container className='relative justify-start items-start flex flex-col gap-6 md:gap-6 md:divide-gray-300'>
+              <Container className='relative w-full justify-start items-start flex flex-col gap-6 md:gap-6 md:divide-gray-300'>
                 <h2 className='text-2xl lg:text-4xl font-[700] dark:text-white'>
                   {selectedOpinion.attributes.judul}
                 </h2>
@@ -202,7 +202,7 @@ const PendapatKuCard: FunctionComponent<{ data: PendapatKu }> = (props) => {
 
   return (
     <a
-      href='src/pages#'
+      href='@/pages/index#'
       onClick={selectedHandler}
       className='block max-w-sm p-6 bg-white border border-gray-200 rounded-3xl hover:bg-gray-100 dark:bg-black/40 dark:border-gray-700 dark:hover:bg-slate-800'
     >

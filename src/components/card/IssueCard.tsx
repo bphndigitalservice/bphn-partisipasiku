@@ -36,9 +36,9 @@ const IssueCard: FunctionComponent<IssueCardProps> = ({
       href={`/diskusi/${slug}`}
       className='flex flex-col items-start gap-2 p-3 transition duration-200 ease-in-out bg-white rounded-2xl shadow-none cursor-pointer md:flex-col group dark:bg-gray-700/30 ring-1 ring-gray-200 hover:bg-gray-100 dark:ring-gray-900 dark:hover:bg-slate-600/30'
     >
-      <p className='block lg:hidden rounded-full px-2 py-2 dark:bg-slate-800 bg-blue-500 text-white max-w-max text-[0.7em] '>
+      <span className='block lg:hidden bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300'>
         {topic}
-      </p>
+      </span>
       <div className='hidden md:block relative overflow-hidden rounded-md w-[80px] h-[80px] md:w-full md:h-[150px]'>
         <AdvanceImage
           src={`${cover.publicId}`}

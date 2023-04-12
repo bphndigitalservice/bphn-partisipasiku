@@ -1,4 +1,5 @@
-import React, { Fragment, FunctionComponent, useMemo, useState } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
+import { motion } from 'framer-motion';
 import Container from '@/components/base/Container';
 import Seo from '@/components/seo/Seo';
 import clsxtw from '@/lib/clsxtw';
@@ -6,6 +7,10 @@ import { Response, Program } from '@/types/model';
 import DraftCard from '@/components/card/DraftCard';
 import { fetchPrograms } from '@/lib/legislasirepo';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import {
+  childAnimationProps,
+  staggerAnimationProps,
+} from '@/configs/animation';
 
 export async function getStaticProps() {
   const result = await fetchPrograms();
@@ -47,7 +52,7 @@ const Masthead = () => {
         <h5 className='w-full p-4 text-5xl font-bold dark:backdrop-blur-none tracking-tight text-center text-transparent bg-clip-text bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500 font-body lg:text-[7em]'>
           Program Legislasi
         </h5>
-        <h6 className='text-md text-center text-black dark:text-gray-100/80 lg:text-2xl font-[400] tracking-normal'>
+        <h6 className='text-md text-center text-black dark:text-gray-100/80 lg:text-2xl font-[280] tracking-wide'>
           Pantau dan sampaikan pendapat anda terkait progres pembentukan
           peraturan perundang-undangan di Indonesia.
         </h6>
@@ -57,16 +62,19 @@ const Masthead = () => {
 };
 
 const Drafts: FunctionComponent<{ program: Response<Program[]> }> = (props) => {
-  const [page, setPage] = useState<number>(1);
-
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
+    <motion.div
+      className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'
+      {...staggerAnimationProps}
+    >
       {props.program.data.map((e, i) => (
-        <DraftCard
+        <motion.div
           key={e.id}
-          program={e}
-        />
+          {...childAnimationProps}
+        >
+          <DraftCard program={e} />
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };

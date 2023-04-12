@@ -53,7 +53,6 @@ export const fetchPrograms = async (type?: number) => {
   const previousYear = new Date().getFullYear();
   const years = Array.from(Array(2), (_, i) => previousYear - i);
   const filterYears = years.join(',');
-  console.log(filterYears);
 
   //get last 2 years programs
   searchParams.append('filter[year]', filterYears);

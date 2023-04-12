@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { motion } from 'framer-motion';
 import Container from '@/components/base/Container';
 import Seo from '@/components/seo/Seo';
 import clsxtw from '@/lib/clsxtw';
@@ -10,6 +11,10 @@ import { getIssues, getTopics } from '@/lib/content';
 import { ContentIssue, ContentTopic } from '@/types/model';
 import IssueGrid from '@/components/IssueGrid';
 import { AppInfo } from '@/configs';
+import {
+  childAnimationProps,
+  staggerAnimationProps,
+} from '@/configs/animation';
 
 export const getStaticProps: GetStaticProps = async () => {
   const issues = await getIssues({
@@ -53,7 +58,7 @@ const Masthead = () => {
   return (
     <section
       className={clsxtw(
-        'relative h-[60vh] inset-0 dark:bg-bottom bg-top bg-no-repeat border-b-slate-500/[0.2] border-b',
+        'relative h-[40vh] inset-0 dark:bg-bottom bg-top bg-no-repeat border-b-slate-500/[0.2] border-b',
         styles.beams
       )}
     >
@@ -78,23 +83,31 @@ const HighlightedTopics = ({ topics }: { topics: ContentTopic[] }) => {
       actionLink='/kategori'
       actionLabel='Lihat Semua'
     >
-      <div className='grid grid-cols-2 gap-1 md:grid-cols-2 lg:grid-cols-4'>
+      <motion.div
+        className='grid grid-cols-2 gap-1 md:grid-cols-2 lg:grid-cols-4'
+        {...staggerAnimationProps}
+      >
         {topics.map((e, _) => (
-          <TopicCard
-            cover={{
-              url: e.attachment.url,
-              publicId: e.attachment.cloudinaryPublicId,
-              placeholder: e.attachment.placeholder,
-              altTxt: e.attachment.alternativeText,
-              caption: e.attachment.caption,
-            }}
-            key={e.slug}
-            id={e.id}
-            name={e.name}
-            slug={e.slug}
-          />
+          <motion.div
+            key={e.id}
+            {...childAnimationProps}
+          >
+            <TopicCard
+              cover={{
+                url: e.attachment.url,
+                publicId: e.attachment.cloudinaryPublicId,
+                placeholder: e.attachment.placeholder,
+                altTxt: e.attachment.alternativeText,
+                caption: e.attachment.caption,
+              }}
+              key={e.slug}
+              id={e.id}
+              name={e.name}
+              slug={e.slug}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </Section>
   );
 };

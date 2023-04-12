@@ -41,7 +41,7 @@ const TopicCard: FunctionComponent<TopicCardProps> = (props) => {
         <span className='text-lg tracking-tight text-center  font-[600] translate-y-[10px] group-hover:translate-y-0 transition-all duration-100 ease-linear'>
           {props.name}
         </span>
-        <span className='flex flex-row gap-1 justify-between items-center group-hover:opacity-100 group-hover:translate-y-0 transition-all delay-75 duration-100 ease-linear text-[0.66em] opacity-0 translate-y-[10px] '>
+        <span className='flex flex-row gap-1 justify-between items-center group-hover:opacity-100 group-hover:translate-y-0 transition-all delay-75 duration-100 ease-linear text-[0.8em] opacity-0 translate-y-[10px] '>
           Selengkapnya <ArrowLongRightIcon className='w-3 h-3' />{' '}
         </span>
       </div>
