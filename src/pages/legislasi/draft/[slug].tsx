@@ -1,5 +1,10 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import React, { FunctionComponent, Suspense, useState } from 'react';
+import React, {
+  ComponentPropsWithoutRef,
+  FunctionComponent,
+  Suspense,
+  useState,
+} from 'react';
 import Container from '@/components/base/Container';
 import axiosInstance, {
   axiosMonevFeetcher,
@@ -332,7 +337,7 @@ function Artifacts({ taskId }: { taskId: number | string }) {
   return (
     <div className='border border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
       <h5 className='text-xl font-bold dark:text-white'>Dokumen</h5>
-      <div className='grid grid-cols-3 gap-2'>
+      <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
         {data?.data.map((e, i) => (
           <DownloadArtifactButton
             artifact={e}
@@ -372,7 +377,7 @@ const DownloadArtifactButton: FunctionComponent<DownloadArtifactButtonProps> = (
       <button
         type='button'
         onClick={downloadFile}
-        className='px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+        className='px-3 py-2 text-xs font-medium text-center text-white bg-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-slate-800 dark:hover:bg-slate-900 dark:focus:ring-blue-800'
       >
         Unduh
       </button>

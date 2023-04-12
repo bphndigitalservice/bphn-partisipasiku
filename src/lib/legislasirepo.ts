@@ -50,8 +50,17 @@ export const fetchTasks = async (params?: TasksQueryParams) => {
 
 export const fetchPrograms = async (type?: number) => {
   const searchParams = new URLSearchParams();
+  const previousYear = new Date().getFullYear();
+  const years = Array.from(Array(2), (_, i) => previousYear - i);
+  const filterYears = years.join(',');
+  console.log(filterYears);
+
+  //get last 2 years programs
+  searchParams.append('filter[year]', filterYears);
+
   if (type) searchParams.set(`filter[type]`, `${type}`);
   searchParams.append('sort', '-year');
+
   return await axiosInstance.get<Response<Program[]>>('programs', {
     params: searchParams,
   });

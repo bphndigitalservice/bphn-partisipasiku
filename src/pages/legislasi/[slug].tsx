@@ -232,14 +232,10 @@ const LegislationTable: FunctionComponent<LegislationTableProps> = ({
                       >
                         {e.regulation.title}
                       </Link>
-                      <p className='flex lg:hidden flex-col gap-2'>
-                        <span className='text-xs text-slate-800 dark:text-blue-500 font-[600]'>
-                          {e.stage.name}
-                        </span>
-                        <span className='text-xs '>
-                          diperbarui {moment(e.updated_at).fromNow()}
-                        </span>
-                      </p>
+                      <DraftProgress
+                        id={e.id}
+                        className="flex lg:hidden flex-col gap-2"
+                      />
                     </div>
                   </td>
                   <td className='px-6 py-4 hidden lg:table-cell'>
