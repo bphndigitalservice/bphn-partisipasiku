@@ -1,7 +1,12 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import React, { FunctionComponent, Suspense, useState } from 'react';
 import Container from '@/components/base/Container';
-import axiosInstance, { taskDetail } from '@/lib/legislasirepo';
+import axiosInstance, {
+  axiosMonevFeetcher,
+  fetchPrograms,
+  fetchTasks,
+  taskDetail,
+} from '@/lib/legislasirepo';
 import Breadcrumb from '@/components/breadcrumb';
 import Back from '@/components/back';
 import Disqus from '@/components/Disqus';
@@ -23,13 +28,32 @@ import 'moment/locale/id';
 import Seo from '@/components/seo/Seo';
 import { OG_URL } from '@/configs/env';
 import useSWR from 'swr';
-import { DateTime } from 'asn1js';
-import { useDownloadFile } from '@/hooks/useDownloadFile';
 import FileSaver from 'file-saver';
+import { ParsedUrlQuery } from 'querystring';
+import { useRouter } from 'next/router';
+import { truncateSlug } from '@/lib/string';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { query } = context;
-  const id = query.slug![0];
+interface IParams extends ParsedUrlQuery {
+  slug: string;
+}
+export const getStaticPaths: GetStaticPaths<IParams> = async () => {
+  const response = await fetchTasks({ limit: -1 });
+
+  const paths = response.data.data.map((e) => {
+    const title = truncateSlug(e.regulation.title);
+    return {
+      params: { slug: `${e.id}-${title}` },
+    };
+  });
+
+  return {
+    paths,
+    fallback: true,
+  };
+};
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { slug } = context.params as IParams;
+  const id = slug.split('-')[0];
   const results = await taskDetail(id);
   const histories = await axiosInstance.get<Response<RegulationHistory[]>>(
     `tasks/${id}/history`
@@ -44,8 +68,59 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default function DraftPage(
-  props: InferGetServerSidePropsType<GetServerSideProps>
+  props: InferGetStaticPropsType<GetStaticProps>
 ) {
+  const router = useRouter();
+  const discussionUrl = useDiscussionUrl();
+
+  if (router.isFallback) {
+    return (
+      <Container>
+        <div
+          role='status'
+          className='max-w-md p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700'
+        >
+          <div className='flex items-center justify-between'>
+            <div>
+              <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5'></div>
+              <div className='w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700'></div>
+            </div>
+            <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12'></div>
+          </div>
+          <div className='flex items-center justify-between pt-4'>
+            <div>
+              <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5'></div>
+              <div className='w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700'></div>
+            </div>
+            <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12'></div>
+          </div>
+          <div className='flex items-center justify-between pt-4'>
+            <div>
+              <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5'></div>
+              <div className='w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700'></div>
+            </div>
+            <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12'></div>
+          </div>
+          <div className='flex items-center justify-between pt-4'>
+            <div>
+              <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5'></div>
+              <div className='w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700'></div>
+            </div>
+            <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12'></div>
+          </div>
+          <div className='flex items-center justify-between pt-4'>
+            <div>
+              <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5'></div>
+              <div className='w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700'></div>
+            </div>
+            <div className='h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12'></div>
+          </div>
+          <span className='sr-only'>Loading...</span>
+        </div>
+      </Container>
+    );
+  }
+
   const links = [
     { url: '/legislasi', label: 'Program Legislasi' },
     {
@@ -57,7 +132,7 @@ export default function DraftPage(
       label: props.draft.data.regulation.title,
     },
   ];
-  const discussionUrl = useDiscussionUrl();
+
   return (
     <div className='relative flex flex-col'>
       <div className='absolute h-[40vh] bg-top inset-0 bg-gradient-to-b from-pink-200/30 dark:from-violet-500/20 to-transparent z-[-1]'></div>
@@ -231,29 +306,33 @@ function History({ histories }: { histories: RegulationHistory[] }) {
   );
 }
 
-const artifactFetcher = async (url: string) => {
-  return await axiosInstance
-    .get(url)
-    .then((res) => res.data)
-    .catch((error) => {
-      if (error.response.status !== 409) throw error;
-    });
-};
-
 function Artifacts({ taskId }: { taskId: number | string }) {
   const { data, isLoading, error } = useSWR<{ data: Artifact[] }>(
     `tasks/${taskId}/artifacts`,
-    artifactFetcher
+    axiosMonevFeetcher
   );
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div
+        role='status'
+        className='max-w-sm animate-pulse'
+      >
+        <div className='h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4'></div>
+        <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5'></div>
+        <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5'></div>
+        <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5'></div>
+        <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5'></div>
+        <div className='h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]'></div>
+        <span className='sr-only'>Loading...</span>
+      </div>
+    );
   }
 
   return (
     <div className='border border-gray-300 dark:border-gray-500 rounded-md p-6 flex flex-col gap-2 bg-gray-50 dark:bg-[#111]'>
       <h5 className='text-xl font-bold dark:text-white'>Dokumen</h5>
-      <div className="grid grid-cols-3 gap-2">
+      <div className='grid grid-cols-3 gap-2'>
         {data?.data.map((e, i) => (
           <DownloadArtifactButton
             artifact={e}
@@ -285,11 +364,9 @@ const DownloadArtifactButton: FunctionComponent<DownloadArtifactButtonProps> = (
   const { artifact } = props;
 
   return (
-    <div
-      className="bg-white dark:bg-black rounded-md border border-gray-200 dark:border-gray-800 p-2 flex flex-col gap-2"
-    >
-      <p className="font-[500] text-blue-500">{artifact.artifact_type}</p>
-      <p className="font-[500] text-xs">
+    <div className='bg-white dark:bg-black rounded-md border border-gray-200 dark:border-gray-800 p-2 flex flex-col gap-2'>
+      <p className='font-[500] text-blue-500'>{artifact.artifact_type}</p>
+      <p className='font-[500] text-xs'>
         diperbarui {moment(artifact.uploaded_at).fromNow()}
       </p>
       <button

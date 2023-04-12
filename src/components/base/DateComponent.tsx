@@ -2,6 +2,7 @@ import React, { ComponentPropsWithRef, ForwardedRef, forwardRef } from 'react';
 import clsxtw from '@/lib/clsxtw';
 import { CalendarDays } from '@/components/icons';
 import moment from 'moment/moment';
+import 'moment/locale/id';
 
 type DateComponentProps = ComponentPropsWithRef<'span'> & {
   date: Date;

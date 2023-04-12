@@ -1,6 +1,6 @@
 import Axios, { AxiosResponse } from 'axios';
 import { EMONEV_API_ENDPOINT, EMONEV_API_KEY } from '@/configs/env';
-import { Program, ProgramType, Response, Task } from '@/types/model';
+import { Program, ProgramType, Progres, Response, Task } from '@/types/model';
 
 const axiosInstance = Axios.create({
   baseURL: `${EMONEV_API_ENDPOINT}`,
@@ -26,8 +26,9 @@ export interface TasksQueryParams {
   department?: number | string;
   year?: number | string;
   page?: number | string;
+  limit?: number | string;
 }
-export const tasks = async (params?: TasksQueryParams) => {
+export const fetchTasks = async (params?: TasksQueryParams) => {
   const urlSearchParams = new URLSearchParams();
   if (params?.year)
     urlSearchParams.set('filter[programs.year]', `${params.year}`);
@@ -40,6 +41,7 @@ export const tasks = async (params?: TasksQueryParams) => {
     urlSearchParams.set(`filter[department_id]`, `${params.department}`);
   if (params?.label)
     urlSearchParams.set(`filter[regulations.label]`, `${params.label}`);
+  if (params?.limit) urlSearchParams.set('limit', `${params.limit}`);
 
   return await axiosInstance.get<Response<Task[]>>('tasks', {
     params: urlSearchParams,
@@ -65,4 +67,13 @@ export const programTypes = async () => {
 
 export const taskDetail = async (id: number | string) => {
   return await axiosInstance.get<Response<Task>>(`tasks/${id}`);
+};
+
+export const axiosMonevFeetcher = async (url: string) => {
+  return await axiosInstance
+    .get(url)
+    .then((res) => res.data)
+    .catch((error) => {
+      if (error.response.status !== 409) throw error;
+    });
 };

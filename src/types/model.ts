@@ -217,3 +217,8 @@ export interface Artifact {
   uploaded_at: string;
   period_description: string;
 }
+
+export interface Progres {
+  stage: string;
+  updated_at: string;
+}

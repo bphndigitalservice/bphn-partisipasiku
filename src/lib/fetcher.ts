@@ -5,6 +5,7 @@ import {
   STRAPI_GRAPHQL_API_ENDPOINT,
   STRAPI_REST_API_ENDPOINT,
 } from '@/configs/env';
+import axiosInstance from '@/lib/legislasirepo';
 
 const gqlClient = new GraphQLClient(`${STRAPI_GRAPHQL_API_ENDPOINT}`, {
   headers: {

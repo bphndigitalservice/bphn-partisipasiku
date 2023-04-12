@@ -7,14 +7,15 @@ import DraftCard from '@/components/card/DraftCard';
 import { fetchPrograms } from '@/lib/legislasirepo';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const result = await fetchPrograms();
-  const data = result;
+  const data = result.data;
 
   return {
     props: {
-      programs: data.data,
+      programs: data,
     },
+    revalidate: 10,
   };
 }
 

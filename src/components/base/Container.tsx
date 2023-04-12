@@ -14,7 +14,7 @@ export default function Container({
   return (
     <div
       {...rest}
-      className={clsxtw('container mx-auto p-6 md:p-4', className)}
+      className={clsxtw('container w-[80%] p-6 md:p-4 mx-auto', className)}
     >
       {children}
     </div>

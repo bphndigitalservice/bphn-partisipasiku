@@ -19,7 +19,7 @@ const DraftCard: FunctionComponent<DraftProps> = (props) => {
   return (
     <Card
       as={Link}
-      href={`/legislasi/${props.program.id}/${slug}`}
+      href={`/legislasi/${props.program.id}-${slug}`}
       className='flex flex-col items-start gap-2 p-3 transition duration-200 ease-in-out bg-white rounded-2xl shadow-none cursor-pointer md:flex-col group dark:bg-gray-700/30 ring-1 ring-gray-200 hover:bg-gray-100 dark:ring-gray-900 dark:hover:bg-slate-600/30'
     >
       <div className='flex flex-col justify-between flex-1 w-full px-0 py-1'>
