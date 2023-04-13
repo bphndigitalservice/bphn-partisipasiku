@@ -1,5 +1,5 @@
 import { FunctionComponent, PropsWithChildren } from 'react';
-import { Inter, Fira_Sans as FiraSans } from '@next/font/google';
+import { Inter, Fira_Sans as FiraSans } from 'next/font/google';
 import Footer from '@/components/base/Footer';
 import Header from '@/components/base/Header';
 import { clsx } from 'clsx';

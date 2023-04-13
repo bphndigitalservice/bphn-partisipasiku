@@ -11,26 +11,24 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { model, id, slug } = req.query;
+  const { model, id, slug, token } = req.query;
 
-  if (!req.headers[HEADER_SIGNATURE]) {
+  if (!token) {
     return res.status(401).json({
       message: 'invalid secret',
       revalidated: false,
     });
   }
 
-  if (req.headers[HEADER_SIGNATURE] === process.env.NEXT_REVALIDATE_SECRET) {
+  if (token === process.env.NEXT_REVALIDATE_SECRET) {
     await res.revalidate('/');
 
     if (model === 'topic') {
       await res.revalidate('/kategori');
-      await res.revalidate(`/kategori/${slug}`);
     }
 
     if (model === 'issue') {
       await res.revalidate('/diskusi');
-      await res.revalidate(`/diskusi/${slug}`);
     }
 
     return res.status(200).json({
@@ -38,4 +36,9 @@ export default async function handler(
       revalidated: true,
     });
   }
+
+  return res.status(401).json({
+    message: 'invalid secret',
+    revalidated: false,
+  });
 }

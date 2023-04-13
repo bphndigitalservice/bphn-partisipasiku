@@ -89,7 +89,7 @@ const HighlightedTopics = ({ topics }: { topics: ContentTopic[] }) => {
       >
         {topics.map((e, _) => (
           <motion.div
-            key={e.id}
+            key={`${e.id}-${e.slug}`}
             {...childAnimationProps}
           >
             <TopicCard
