@@ -135,6 +135,8 @@ export default function DraftPage(
       <Seo
         pageTitle={program.data.name}
         description={`Partisipasi publik ${program.data.name}`}
+        title={program.data.name}
+        type='article'
       />
       <Container className='flex flex-col gap-2'>
         <div className='my-3'>

@@ -85,6 +85,17 @@ export const getTopics = async (
                   }
                 }
               }
+              artifacts {
+                data {
+                  attributes {
+                    ext
+                    mime
+                    name
+                    url
+                    provider
+                  }
+                }
+              }
               description
               background
               name
@@ -156,6 +167,16 @@ export const getIssues = async (variables?: Variables) => {
             title
             background
             legacyDate
+            attachments {
+              data {
+                attributes {
+                  ext
+                  mime
+                  name
+                  url
+                }
+              }
+            }
             seo {
               metaTitle
               metaDescription

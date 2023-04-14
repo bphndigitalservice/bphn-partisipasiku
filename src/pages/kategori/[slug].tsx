@@ -74,12 +74,12 @@ export default function IssueByTopicPage({
       />
       <Container className='mt-10 flex flex-col lg:flex-row gap-6'>
         <div className='flex flex-col w-full lg:w-[50vw] gap-2 lg:px-6 lg:border-r border-r-gray-200 dark:border-slate-700'>
-          <div className="lg:sticky lg:top-[10vh]">
+          <div className='lg:sticky lg:top-[10vh]'>
             <motion.h5
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
-              className='text-2xl lg:text-4xl font-[600] tracking-normal'
+              className='text-2xl lg:text-4xl font-[600] tracking-normal mb-10'
             >
               {topic.name}
             </motion.h5>

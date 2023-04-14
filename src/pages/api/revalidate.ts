@@ -25,10 +25,12 @@ export default async function handler(
 
     if (model === 'topic') {
       await res.revalidate('/kategori');
+      await res.revalidate(`/kategori/${slug}`);
     }
 
     if (model === 'issue') {
       await res.revalidate('/diskusi');
+      await res.revalidate(`/diskusi/${slug}`);
     }
 
     return res.status(200).json({
