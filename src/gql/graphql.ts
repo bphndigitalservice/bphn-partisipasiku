@@ -22,6 +22,8 @@ export type Scalars = {
   Date: any;
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
+  /** A string used to identify an i18n locale */
+  I18NLocaleCode: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
   /** The `BigInt` scalar type represents non-fractional signed whole numeric values. */
@@ -173,6 +175,69 @@ export type BooleanFilterInput = {
   null?: InputMaybe<Scalars['Boolean']>;
   or?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
   startsWith?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type Category = {
+  __typename?: 'Category';
+  Label: Scalars['String'];
+  Slug: Scalars['String'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  locale?: Maybe<Scalars['String']>;
+  localizations?: Maybe<CategoryRelationResponseCollection>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type CategoryLocalizationsArgs = {
+  filters?: InputMaybe<CategoryFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type CategoryEntity = {
+  __typename?: 'CategoryEntity';
+  attributes?: Maybe<Category>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type CategoryEntityResponse = {
+  __typename?: 'CategoryEntityResponse';
+  data?: Maybe<CategoryEntity>;
+};
+
+export type CategoryEntityResponseCollection = {
+  __typename?: 'CategoryEntityResponseCollection';
+  data: Array<CategoryEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type CategoryFiltersInput = {
+  Label?: InputMaybe<StringFilterInput>;
+  Slug?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<Array<InputMaybe<CategoryFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  locale?: InputMaybe<StringFilterInput>;
+  localizations?: InputMaybe<CategoryFiltersInput>;
+  not?: InputMaybe<CategoryFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<CategoryFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type CategoryInput = {
+  Label?: InputMaybe<Scalars['String']>;
+  Slug?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type CategoryRelationResponseCollection = {
+  __typename?: 'CategoryRelationResponseCollection';
+  data: Array<CategoryEntity>;
 };
 
 export type ComponentBiodataPartisipanPartisipan = {
@@ -356,6 +421,7 @@ export type GenericMorph =
   | About
   | Activity
   | Author
+  | Category
   | ComponentBiodataPartisipanPartisipan
   | ComponentSharedMedia
   | ComponentSharedQuote
@@ -489,6 +555,7 @@ export type IntFilterInput = {
 
 export type Issue = {
   __typename?: 'Issue';
+  attachments?: Maybe<UploadFileRelationResponseCollection>;
   author?: Maybe<AuthorEntityResponse>;
   background: Scalars['String'];
   cover: UploadFileEntityResponse;
@@ -501,6 +568,12 @@ export type Issue = {
   topic?: Maybe<TopicEntityResponse>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   views?: Maybe<Scalars['Long']>;
+};
+
+export type IssueAttachmentsArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type IssueEntity = {
@@ -539,6 +612,7 @@ export type IssueFiltersInput = {
 };
 
 export type IssueInput = {
+  attachments?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   author?: InputMaybe<Scalars['ID']>;
   background?: InputMaybe<Scalars['String']>;
   cover?: InputMaybe<Scalars['ID']>;
@@ -646,6 +720,8 @@ export type Mutation = {
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createActivity?: Maybe<ActivityEntityResponse>;
   createAuthor?: Maybe<AuthorEntityResponse>;
+  createCategory?: Maybe<CategoryEntityResponse>;
+  createCategoryLocalization?: Maybe<CategoryEntityResponse>;
   createIssue?: Maybe<IssueEntityResponse>;
   createIssueView?: Maybe<IssueViewEntityResponse>;
   createPendapatKu?: Maybe<PendapatKuEntityResponse>;
@@ -660,6 +736,7 @@ export type Mutation = {
   deleteAbout?: Maybe<AboutEntityResponse>;
   deleteActivity?: Maybe<ActivityEntityResponse>;
   deleteAuthor?: Maybe<AuthorEntityResponse>;
+  deleteCategory?: Maybe<CategoryEntityResponse>;
   deleteGlobal?: Maybe<GlobalEntityResponse>;
   deleteIssue?: Maybe<IssueEntityResponse>;
   deleteIssueView?: Maybe<IssueViewEntityResponse>;
@@ -686,6 +763,7 @@ export type Mutation = {
   updateAbout?: Maybe<AboutEntityResponse>;
   updateActivity?: Maybe<ActivityEntityResponse>;
   updateAuthor?: Maybe<AuthorEntityResponse>;
+  updateCategory?: Maybe<CategoryEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateGlobal?: Maybe<GlobalEntityResponse>;
   updateIssue?: Maybe<IssueEntityResponse>;
@@ -714,6 +792,17 @@ export type MutationCreateActivityArgs = {
 
 export type MutationCreateAuthorArgs = {
   data: AuthorInput;
+};
+
+export type MutationCreateCategoryArgs = {
+  data: CategoryInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+export type MutationCreateCategoryLocalizationArgs = {
+  data?: InputMaybe<CategoryInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 export type MutationCreateIssueArgs = {
@@ -758,6 +847,11 @@ export type MutationDeleteActivityArgs = {
 
 export type MutationDeleteAuthorArgs = {
   id: Scalars['ID'];
+};
+
+export type MutationDeleteCategoryArgs = {
+  id: Scalars['ID'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 export type MutationDeleteIssueArgs = {
@@ -841,6 +935,12 @@ export type MutationUpdateActivityArgs = {
 export type MutationUpdateAuthorArgs = {
   data: AuthorInput;
   id: Scalars['ID'];
+};
+
+export type MutationUpdateCategoryArgs = {
+  data: CategoryInput;
+  id: Scalars['ID'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 export type MutationUpdateFileInfoArgs = {
@@ -987,6 +1087,8 @@ export type Query = {
   activity?: Maybe<ActivityEntityResponse>;
   author?: Maybe<AuthorEntityResponse>;
   authors?: Maybe<AuthorEntityResponseCollection>;
+  categories?: Maybe<CategoryEntityResponseCollection>;
+  category?: Maybe<CategoryEntityResponse>;
   global?: Maybe<GlobalEntityResponse>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
@@ -1030,6 +1132,19 @@ export type QueryAuthorsArgs = {
   filters?: InputMaybe<AuthorFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type QueryCategoriesArgs = {
+  filters?: InputMaybe<CategoryFiltersInput>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type QueryCategoryArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 export type QueryI18NLocaleArgs = {
@@ -1166,6 +1281,7 @@ export type StringFilterInput = {
 
 export type Topic = {
   __typename?: 'Topic';
+  artifacts?: Maybe<UploadFileRelationResponseCollection>;
   attacments: UploadFileEntityResponse;
   background: Scalars['String'];
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -1174,6 +1290,12 @@ export type Topic = {
   publishedAt?: Maybe<Scalars['DateTime']>;
   slug: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type TopicArtifactsArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type TopicEntity = {
@@ -1208,6 +1330,7 @@ export type TopicFiltersInput = {
 };
 
 export type TopicInput = {
+  artifacts?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   attacments?: InputMaybe<Scalars['ID']>;
   background?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
@@ -1705,6 +1828,20 @@ export type GetTopicsQuery = {
             } | null;
           } | null;
         };
+        artifacts?: {
+          __typename?: 'UploadFileRelationResponseCollection';
+          data: Array<{
+            __typename?: 'UploadFileEntity';
+            attributes?: {
+              __typename?: 'UploadFile';
+              ext?: string | null;
+              mime: string;
+              name: string;
+              url: string;
+              provider: string;
+            } | null;
+          }>;
+        } | null;
       } | null;
     }>;
   } | null;
@@ -1732,6 +1869,19 @@ export type GetIssuesQuery = {
         background: string;
         legacyDate?: any | null;
         createdAt?: any | null;
+        attachments?: {
+          __typename?: 'UploadFileRelationResponseCollection';
+          data: Array<{
+            __typename?: 'UploadFileEntity';
+            attributes?: {
+              __typename?: 'UploadFile';
+              ext?: string | null;
+              mime: string;
+              name: string;
+              url: string;
+            } | null;
+          }>;
+        } | null;
         seo?: {
           __typename?: 'ComponentSharedSeo';
           metaTitle: string;
@@ -2079,6 +2229,71 @@ export const GetTopicsDocument = {
                             },
                             {
                               kind: 'Field',
+                              name: { kind: 'Name', value: 'artifacts' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'data' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'attributes',
+                                          },
+                                          selectionSet: {
+                                            kind: 'SelectionSet',
+                                            selections: [
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'ext',
+                                                },
+                                              },
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'mime',
+                                                },
+                                              },
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'name',
+                                                },
+                                              },
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'url',
+                                                },
+                                              },
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'provider',
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: 'Field',
                               name: { kind: 'Name', value: 'description' },
                             },
                             {
@@ -2220,6 +2435,64 @@ export const GetIssuesDocument = {
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'legacyDate' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'attachments' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'data' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'attributes',
+                                          },
+                                          selectionSet: {
+                                            kind: 'SelectionSet',
+                                            selections: [
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'ext',
+                                                },
+                                              },
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'mime',
+                                                },
+                                              },
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'name',
+                                                },
+                                              },
+                                              {
+                                                kind: 'Field',
+                                                name: {
+                                                  kind: 'Name',
+                                                  value: 'url',
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
                             },
                             {
                               kind: 'Field',
