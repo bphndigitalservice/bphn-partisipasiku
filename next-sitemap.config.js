@@ -7,20 +7,6 @@ module.exports = {
   generateRobotsTxt: true,
   sitemapSize: 5000,
   exclude: ['/server-sitemap-index.xml'],
-  transform: async (config, path) => {
-
-    const paths = path.split("/")
-    const slug = slugify(paths[paths.length-1]);
-    const newPath = `${paths.pop().join("/")}/${slug}`
-
-    return {
-      loc: newPath, // => this will be exported as http(s)://<config.siteUrl>/<path>
-      changefreq: config.changefreq,
-      priority: config.priority,
-      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
-      alternateRefs: config.alternateRefs ?? [],
-    }
-  },
   robotsTxtOptions: {
     policies: [
       {
