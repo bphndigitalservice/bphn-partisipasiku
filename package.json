@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.4.4",
-    "@headlessui/react": "^1.7.13",
+    "@headlessui/react": "^1.7.14",
     "@next/font": "13.3.0",
     "@sindresorhus/slugify": "^2.2.0",
     "@uiw/react-markdown-editor": "^5.11.1",
