@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.4.4",
-    "@headlessui/react": "^1.7.13",
+    "@headlessui/react": "^1.7.17",
     "@next/font": "13.3.0",
     "@sindresorhus/slugify": "^2.2.0",
     "@uiw/react-markdown-editor": "^5.11.1",
@@ -58,8 +58,8 @@
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "@graphql-codegen/cli": "2.16.4",
-    "@graphql-codegen/client-preset": "1.2.6",
     "@graphql-codegen/introspection": "4.0.0",
+    "@graphql-codegen/client-preset": "4.1.0",
     "@next/bundle-analyzer": "^13.1.6",
     "@next/eslint-plugin-next": "^13.1.6",
     "@tailwindcss/line-clamp": "^0.4.2",
