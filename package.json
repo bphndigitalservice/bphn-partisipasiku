@@ -63,7 +63,7 @@
     "@next/bundle-analyzer": "^13.1.6",
     "@next/eslint-plugin-next": "^13.1.6",
     "@tailwindcss/line-clamp": "^0.4.2",
-    "@tailwindcss/typography": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.10",
     "@types/file-saver": "^2.0.5",
     "@types/lodash.debounce": "^4.0.7",
     "@types/node": "18.18.13",
