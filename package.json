@@ -47,7 +47,7 @@
     "react-paginate": "^8.1.4",
     "react-share": "^4.4.1",
     "rehype-figure": "^1.0.1",
-    "remark-gfm": "^3.0.1",
+    "remark-gfm": "^4.0.0",
     "swr": "^2.0.4",
     "tailwind-merge": "^1.9.0",
     "ts-node": "^10.9.1",
