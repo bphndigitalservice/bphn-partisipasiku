@@ -36,7 +36,7 @@
     "next-compose-plugins": "^2.2.1",
     "next-mdx-remote": "^4.3.0",
     "next-pwa": "^5.6.0",
-    "next-remove-imports": "^1.0.10",
+    "next-remove-imports": "^1.0.12",
     "next-sitemap": "^3.1.49",
     "nextjs-google-analytics": "^2.3.3",
     "nextjs-progressbar": "^0.0.16",
